@@ -36,17 +36,19 @@ function TransformationBanner({ compact = false }) {
   if (compact) {
     return (
       <div style={{
-        display: 'flex', alignItems: 'center', gap: 6,
-        padding: '4px 10px',
+        display: 'flex', alignItems: 'center', gap: 4,
+        padding: '4px 8px',
         border: `1px solid ${color}55`,
         background: `${color}0d`,
         borderRadius: 2,
+        flexShrink: 0,
+        minWidth: 0,
       }}>
-        <span style={{ fontSize: 11 }}>🎯</span>
-        <span className="orbitron" style={{ fontSize: 12, color, textShadow: `0 0 6px ${color}` }}>
+        <span style={{ fontSize: 10 }}>🎯</span>
+        <span className="orbitron" style={{ fontSize: 11, color, textShadow: `0 0 6px ${color}`, whiteSpace: 'nowrap' }}>
           {days}d
         </span>
-        <span style={{ fontSize: 9, color: '#7ab8d4', letterSpacing: 1 }}>DEC 31</span>
+        <span style={{ fontSize: 8, color: '#7ab8d4', letterSpacing: 0.5, whiteSpace: 'nowrap' }}>DEC 31</span>
       </div>
     );
   }
@@ -131,9 +133,10 @@ function MobileTopBar({ activePage }) {
       <div style={{
         height: 52, display: 'flex',
         alignItems: 'center', justifyContent: 'space-between',
+        gap: 8, overflow: 'hidden',
       }}>
         {/* Left: logo + page title */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10, minWidth: 0, flex: 1 }}>
           <motion.div
             animate={{ opacity: [1, 0.4, 1] }}
             transition={{ duration: 2, repeat: Infinity }}
@@ -156,13 +159,14 @@ function MobileTopBar({ activePage }) {
         </div>
 
         {/* Right: rank + countdown */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 6, flexShrink: 0, minWidth: 0 }}>
           <div style={{
-            padding: '3px 8px',
+            padding: '3px 7px',
             border: `1px solid ${rank.color}55`,
             background: rank.bgColor,
+            flexShrink: 0,
           }}>
-            <span className="orbitron" style={{ fontSize: 10, color: rank.color }}>
+            <span className="orbitron" style={{ fontSize: 9, color: rank.color, whiteSpace: 'nowrap' }}>
               {rank.icon} LVL {profile?.level || 1}
             </span>
           </div>

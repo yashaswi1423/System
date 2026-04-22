@@ -219,7 +219,7 @@ export default function GoalsModule() {
           <div style={{ fontSize: 10, color: '#ff4466', letterSpacing: 3, fontFamily: 'Orbitron', marginBottom: 4 }}>
             🎯 TRANSFORMATION DEADLINE
           </div>
-          <div style={{ fontSize: 12, color: '#7ab8d4' }}>October 8, 2025 — Lean Aesthetic Body</div>
+          <div style={{ fontSize: 12, color: '#7ab8d4' }}>Dec 31, 2026 — Lean Aesthetic Body</div>
         </div>
         <div style={{ textAlign: 'center' }}>
           <div className="orbitron" style={{
