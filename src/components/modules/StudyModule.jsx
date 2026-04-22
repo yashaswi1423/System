@@ -98,14 +98,15 @@ export default function StudyModule() {
       </div>
 
       {/* Tabs */}
-      <div style={{ display: 'flex', gap: 4, borderBottom: '1px solid rgba(170,136,255,0.15)', paddingBottom: 8 }}>
+      <div style={{ display: 'flex', gap: 4, flexWrap: 'wrap', borderBottom: '1px solid rgba(170,136,255,0.15)', paddingBottom: 8 }}>
         {TABS.map(({ id, label, icon: Icon }) => (
           <button key={id} onClick={() => setActiveTab(id)} style={{
-            padding: '6px 12px', background: activeTab === id ? 'rgba(170,136,255,0.12)' : 'transparent',
+            padding: '6px 10px', background: activeTab === id ? 'rgba(170,136,255,0.12)' : 'transparent',
             border: `1px solid ${activeTab === id ? '#aa88ff' : 'transparent'}`,
             color: activeTab === id ? '#aa88ff' : '#7ab8d4', cursor: 'pointer',
             fontFamily: 'Rajdhani', fontSize: 12, fontWeight: 600, letterSpacing: 1,
-            display: 'flex', alignItems: 'center', gap: 5, transition: 'all 0.2s',
+            display: 'flex', alignItems: 'center', gap: 4, transition: 'all 0.2s',
+            flexShrink: 0,
           }}>
             <Icon size={12} />{label}
           </button>
