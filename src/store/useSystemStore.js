@@ -253,6 +253,7 @@ export const useSystemStore = create(
       weightLog: [],
       personalRecords: [],   // [{ exercise, weight, reps, date }]
       cardioLog: [],         // [{ date, type, duration, distance, calories }]
+      liveSessionLog: [],    // [{ id, type, label, date, duration, calories, distance, steps, sets, xpEarned }]
       waterLog: [],          // [{ date, glasses }]
       sleepLog: [],          // [{ date, hours, quality: 1-5 }]
       studyResources: [],    // [{ subject, url, title, notes }]
@@ -463,6 +464,46 @@ export const useSystemStore = create(
         set((s) => ({
           cardioLog: [{ id: Date.now(), date: new Date().toLocaleDateString(), ...entry }, ...s.cardioLog.slice(0, 49)],
         })),
+
+      // Live Activity Session
+      logLiveSession: (session, xpAmount, activityType) => {
+        // Save session to log
+        set((s) => ({
+          liveSessionLog: [session, ...(s.liveSessionLog || []).slice(0, 99)],
+        }));
+        // Award XP
+        get().gainXP(xpAmount, `${session.label} Session`);
+        // Stat boosts based on activity type
+        if (activityType === 'gym' || activityType === 'hiit') {
+          get().updateStat('strength', 2);
+          get().updateStat('discipline', 1);
+          get().updateHabitStreak('gym');
+          get().completeQuest('q2');
+        } else if (activityType === 'walk' || activityType === 'run' || activityType === 'cycle' || activityType === 'swim') {
+          get().updateStat('strength', 1);
+          get().updateStat('discipline', 1);
+          // Also log to cardioLog for existing cardio history
+          set((s) => ({
+            cardioLog: [
+              { id: Date.now(), date: new Date().toLocaleDateString(), type: session.label, duration: Math.round(session.duration / 60), distance: (session.distance / 1000).toFixed(2), calories: session.calories },
+              ...s.cardioLog.slice(0, 49),
+            ],
+          }));
+        } else if (activityType === 'study') {
+          get().updateStat('intelligence', 2);
+          get().updateStat('discipline', 1);
+          get().updateHabitStreak('study');
+          set((s) => ({ todayStudyMins: s.todayStudyMins + Math.round(session.duration / 60) }));
+          if (session.duration >= 3600) get().completeQuest('q3');
+        } else if (activityType === 'yoga') {
+          get().updateStat('innerPeace', 2);
+          get().updateStat('discipline', 1);
+        } else if (activityType === 'task') {
+          get().updateStat('discipline', 2);
+        } else {
+          get().updateStat('discipline', 1);
+        }
+      },
 
       // Study
       addStudyBlock: (block) =>
@@ -826,6 +867,7 @@ export const useSystemStore = create(
           weightLog: s.weightLog || [],
           personalRecords: s.personalRecords || [],
           cardioLog: s.cardioLog || [],
+          liveSessionLog: s.liveSessionLog || [],
           waterLog: s.waterLog || [],
           sleepLog: s.sleepLog || [],
           activityLog: s.activityLog || [],

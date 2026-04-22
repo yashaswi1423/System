@@ -1,15 +1,21 @@
 import { motion, AnimatePresence } from 'framer-motion';
-import { Dumbbell, BookOpen, CheckSquare, ChevronLeft, Flame, Target } from 'lucide-react';
+import { Dumbbell, BookOpen, CheckSquare, ChevronLeft, Flame, Target, Activity } from 'lucide-react';
 import { useSystemStore } from '../store/useSystemStore';
 import GymModule from './modules/GymModule';
 import StudyModule from './modules/StudyModule';
 import TasksModule from './modules/TasksModule';
 import SpiritualityModule from './modules/SpiritualityModule';
 import GoalsModule from './modules/GoalsModule';
+import ActivityModule from './modules/ActivityModule';
 
 const MODULES = [
   {
-    id: 'gym',          label: 'GYM',          icon: Dumbbell,
+    id: 'activity',     label: 'LIVE TRACKER',  icon: Activity,
+    color: '#00ff88',   desc: 'Walk · Run · Gym · Study · GPS · Calories',
+    tag: 'LIVE',
+  },
+  {
+    id: 'gym',          label: 'GYM',           icon: Dumbbell,
     color: '#ff4466',   desc: 'PPL Split · Cardio · PRs · Rest Timer',
     tag: 'PHYSICAL',
   },
@@ -187,6 +193,7 @@ export default function CenterPanel() {
               {activeModule === 'tasks' && <TasksModule />}
               {activeModule === 'spirituality' && <SpiritualityModule />}
               {activeModule === 'goals' && <GoalsModule />}
+              {activeModule === 'activity' && <ActivityModule />}
             </motion.div>
           )}
         </AnimatePresence>
